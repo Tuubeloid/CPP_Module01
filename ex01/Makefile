@@ -6,7 +6,7 @@
 #    By: tvalimak <tvalimak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/28 13:42:06 by tvalimak          #+#    #+#              #
-#    Updated: 2024/09/28 14:37:04 by tvalimak         ###   ########.fr        #
+#    Updated: 2024/10/01 16:11:51 by tvalimak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,9 @@ NAME = zombie_out
 CC = c++
 FLAGS = -Wall -Wextra -Werror -std=c++98
 RM = rm -f
+
+# Valgrind flags
+VALGRIND = valgrind --leak-check=full --track-origins=yes --show-reachable=yes
 
 all: $(NAME)
 
@@ -33,4 +36,8 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+# Debug rule using valgrind
+debug: $(NAME)
+	$(VALGRIND) ./$(NAME)
+
+.PHONY: all clean fclean re debug
